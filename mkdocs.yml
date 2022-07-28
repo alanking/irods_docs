@@ -75,4 +75,5 @@ nav:
     - Contributing: 'developers/contributing.md'
     - Development Tools: 'developers/development_tools.md'
     - Logging: 'developers/logging.md'
+    - iRODS API: 'developers/understanding_apis.md'
 
