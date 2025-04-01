@@ -4,7 +4,7 @@ SHELL = /bin/bash
 
 GITHUB_ACCOUNT = irods
 GIT_COMMITTISH = main
-MAKEDOXYGENVERSION = Release_1_9_3
+MAKEDOXYGENVERSION = Release_1_13_2
 
 BUILDAREA = /hostcomputer
 IRODSTARGET = ${BUILDAREA}/irods_for_doxygen
