@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -12,10 +12,12 @@ RUN apt-get update && \
         gnupg \
         lsb-release \
         make \
+        nano \
         python3 \
         python3-pip \
         python3-venv \
         rsync \
+        tig \
         wget \
     && \
     apt-get clean && \
