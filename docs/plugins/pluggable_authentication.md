@@ -481,7 +481,7 @@ The response payload from the server will minimally contain the following:
     "session_token": "<session token>"
 }
 ```
-The `session_token` key contains a string representing a session token, **in plaintext**. This token should be used to authenticate using the native authentication scheme. How the client implements this authentication is entirely up to the developer. For reference, the C++ `irods` client-side authentication plugin saves the session token to a `.irods_secrets` file and then uses the session token to authenticate directly in the `server_auth_with_session_token` operation. Note also that the password was removed from the payload to prevent sending it across the network unnecessarily.
+The `session_token` key contains a string representing a session token, **in plaintext**. This token should be used to authenticate using the native authentication scheme. How the client stores the session token is entirely up to the developer. For reference, the C++ `irods` client-side authentication plugin saves the session token to a `.irods_secrets` file and then uses the session token to authenticate directly in the `server_auth_with_session_token` operation. Note also that the password was removed from the payload to prevent sending it across the network unnecessarily.
 
 **Step 3: `server_auth_with_session_token`**
 
