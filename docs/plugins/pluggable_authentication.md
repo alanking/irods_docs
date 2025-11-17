@@ -32,7 +32,7 @@ In order to use `irods` authentication, iCommands users need to set their authen
 ```
 One can also use the `--prompt-auth-scheme` option of `iinit` to provide the authentication scheme name.
 
-TLS is required in order to use `irods` authentication. See [Client TLS Setup](../system_overview/tls/#client-tls-setup) for more information on how to set up TLS in a client environment.
+TLS is required in order to use `irods` authentication. See [Client TLS Setup](../../system_overview/tls/#client-tls-setup) for more information on how to set up TLS in a client environment.
 
 Run `iinit` and enter the user's password. On success, the user's session token will be stored in `~/.irods/.irods_secrets`.
 
@@ -155,7 +155,7 @@ The configuration is called `user_password_storage_mode` and is set in `server_c
 
 #### Setting up TLS
 
-`irods` authentication requires secure communications between client and server using TLS. See [TLS](../system_overview/tls) for configuring TLS in the server.
+`irods` authentication requires secure communications between client and server using TLS. See [TLS](../../system_overview/tls) for configuring TLS in the server.
 
 For testing purposes, a configuration in `server_config.json` has been provided to allow for insecure communications between client and server. The configuration looks like this:
 ```json
