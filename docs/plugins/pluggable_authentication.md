@@ -54,7 +54,7 @@ Setting a user's password with `iadmin moduser` looks like this:
 iadmin moduser example_user password example_password no-scramble
 ```
 
-Setting a user's password with `iadmin mkuser` looks like this:
+Setting a user's password with `igroupadmin mkuser` looks like this:
 ```bash
 igroupadmin mkuser example_user example_password example_zone no-scramble
 ```
@@ -73,7 +73,7 @@ This removes the user's hashed password from `R_USER_CREDENTIALS`. Note: This do
 
 #### Managing session tokens
 
-Expired session tokens are cleared for individual users of the `irods` authentication scheme as they authenticate using a password. Frequent password-based authentication may lead to accumulation of session tokens. Administrators may periodically prune tokens by a `rodsadmin` with `iadmin remove_session_tokens`.
+Expired session tokens are cleared for individual users of the `irods` authentication scheme as they authenticate using a password. Frequent password-based authentication may lead to an accumulation of session tokens. Administrators may periodically prune tokens with `iadmin remove_session_tokens`.
 
 To remove all session tokens for all users:
 ```bash
@@ -169,7 +169,7 @@ For testing purposes, a configuration in `server_config.json` has been provided 
 ```
 When `insecure_mode` is `false`, TLS is required. This is the default value and the value used when the configuration is not present. When `insecure_mode` is `true`, TLS is not required to use `irods` authentication. **This should only be used for testing and proof of concept purposes. DO NOT USE `insecure_mode` IN PRODUCTION!**
 
-### Migrating to `irods` authentication from `native` authentication
+### Migrating from `native` authentication to `irods` authentication
 
 Deployments should migrate from `native` to `irods` authentication as `native` will eventually be removed in a future major version release.
 
@@ -183,7 +183,7 @@ For sites currently using `native` authentication:
 
 Only the scrypt KDF algorithm is currently supported. Organizations requiring alternate algorithms should [contact the iRODS team](https://irods.org/contact). More algorithms will be added in future iRODS versions.
 
-iRODS session tokens do not implement all of the features laid out in [the OAuth2 specification](https://datatracker.ietf.org/doc/rfc6749) but provides a basic system for periodically requiring users to re-authenticate.
+iRODS session tokens provide a basic system for periodically requiring users to re-authenticate, but do not implement all of the features laid out in [the OAuth2 specification](https://datatracker.ietf.org/doc/rfc6749).
 
 ## PAM (Pluggable Authentication Module)
 
@@ -427,7 +427,7 @@ The `request_result` key contains a time-limited, randomly-generated iRODS passw
 
 #### irods authentication
 
-The native authentication plugin has three server-side operations which must be called in order. The inputs and outputs from each are described below.
+The `irods` authentication plugin has three server-side operations which must be called in order. The inputs and outputs from each are described below.
 
 **Step 1: `server_prepare_auth_check`**
 
@@ -481,7 +481,7 @@ The response payload from the server will minimally contain the following:
     "session_token": "<session token>"
 }
 ```
-The `session_token` key contains a string representing a session token, **in plaintext**. This token should be used to authenticate using the native authentication scheme. How the client stores the session token is entirely up to the developer. For reference, the C++ `irods` client-side authentication plugin saves the session token to a `.irods_secrets` file and then uses the session token to authenticate directly in the `server_auth_with_session_token` operation. Note also that the password was removed from the payload to prevent sending it across the network unnecessarily.
+The `session_token` key contains a string representing a session token, **in plaintext**. This token should be used to authenticate using the `irods` authentication scheme. How the client stores the session token is entirely up to the developer. For reference, the C++ `irods` client-side authentication plugin saves the session token to a `.irods_secrets` file and then uses the session token to authenticate directly in the `server_auth_with_session_token` operation. Note also that the password was removed from the payload to prevent sending it across the network unnecessarily.
 
 **Step 3: `server_auth_with_session_token`**
 
