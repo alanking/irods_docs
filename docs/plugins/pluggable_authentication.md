@@ -69,7 +69,7 @@ A user's password for `irods` authentication can be removed with the `iadmin mod
 ```bash
 iadmin moduser example_user remove_password
 ```
-This removes the user's hashed password from `R_USER_CREDENTIALS`. Note: This does **not** remove the user's passwords from `R_USER_PASSWORD`.
+This removes the user's hashed password from `R_USER_CREDENTIALS`. Note: This does **not** remove the user's legacy passwords from `R_USER_PASSWORD`. In order to remove legacy passwords from `R_USER_PASSWORD`, see [Removing legacy passwords from `R_USER_PASSWORD`](#removing-legacy-passwords-from-r_user_password).
 
 #### Managing session tokens
 
@@ -178,6 +178,17 @@ For sites currently using `native` authentication:
 1. Set `user_password_storage_mode` to "both" in `server_config.json` in order to support both systems.
 2. Allow users to authenticate with the new scheme as passwords are updated.
 3. Once migration is complete, switch to `"hashed"`.
+
+#### Removing legacy passwords from `R_USER_PASSWORD`
+
+The iRODS server package provides a Python script to run on a catalog service provider for assisting with the removal of legacy passwords from the catalog. For default packaged installations, the script is located here: `/var/lib/irods/scripts/remove_legacy_passwords.py`. The script has 4 main modes of operation, controlled by command line options:
+
+1. Default: Remove all legacy passwords for a specific user, including the time-limited, generated passwords used by the PAM scheme.
+1. `--forever-passwords-only`: Remove only legacy passwords used with `native` authentication for a specific user. This is useful if an organization wants to continue supporting PAM authentication because it continues to use `R_USER_PASSWORD` to store its time-limited, generated passwords.
+1. `--dry-run`: The `delete` SQL command is executed, but not committed. This shows the user what will happen when running the script without affecting the database.
+1. `--sql-only`: Displays the SQL which would be executed with the given options. This is useful for administrators who want to run the SQL themselves.
+
+Note that this script only allows for removing legacy passwords for one user at a time. This is intentional. This password removal is an important deployment decision, so this script should be run with caution. Administrators can of course directly `delete` *everything* from `R_USER_PASSWORD` themselves using an SQL client.
 
 ### Limitations
 
